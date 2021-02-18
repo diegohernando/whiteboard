@@ -1,0 +1,17 @@
+**.subckt nand OUT vdd A B vss vbulk
+*.opin OUT
+*.ipin vdd
+*.ipin A
+*.ipin B
+*.ipin vss
+*.ipin vbulk
+XM1 net1 B vss vbulk sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 OUT A net1 vbulk sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM5 OUT A vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM6 OUT B vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+**.ends
+.end

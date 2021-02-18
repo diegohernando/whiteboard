@@ -1,0 +1,183 @@
+**.subckt ring_vco
+x1 10 out_ring o1 9 vss not
+V1 vss GND DC{Vss} 
+V2 vdd vss DC{Vdd} 
+x2 10 o1 o2 9 vss not
+x3 10 o2 o3 9 vss not
+x4 10 o3 o4 9 vss not
+x5 10 o4 o5 9 vss not
+x6 10 o5 o6 9 vss not
+XM1 out_ring net1 9 vss sky130_fd_pr__nfet_01v8 W=1.2 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 out_ring net1 10 10 sky130_fd_pr__pfet_01v8 W=1.5 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=2 m=2 
+XM3 out_vco out_ring vss vss sky130_fd_pr__nfet_01v8 W=0.6 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM4 out_vco out_ring vdd vdd sky130_fd_pr__pfet_01v8 W=1.5 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM5 10 5 vdd vdd sky130_fd_pr__pfet_01v8 W=1.5 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM6 9 in vss vss sky130_fd_pr__nfet_01v8 W=1.5 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM7 5 5 vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM8 5 in vss vss sky130_fd_pr__nfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+V3 in vss DC{Vin} 
+x7 10 o6 o7 9 vss not
+x8 10 o7 o8 9 vss not
+x9 10 o8 net2 9 vss not
+x10 10 net2 net3 9 vss not
+x11 10 net3 net4 9 vss not
+x12 10 net4 net8 9 vss not
+x13 10 net8 net7 9 vss not
+x14 10 net7 net6 9 vss not
+x15 10 net6 net5 9 vss not
+x16 10 net5 net9 9 vss not
+x17 10 net9 net10 9 vss not
+x18 10 net10 net11 9 vss not
+x19 10 net11 net12 9 vss not
+x21 out_vco vss outx2 vdd FD_v2
+x22 outx2 vss outx4 vdd FD_v2
+x23 outx4 vss outx8 vdd FD_v2
+x24 outx8 vss outx16 vdd FD_v2
+x25 outx16 vss outx32 vdd FD_v2
+C1 out vss 2p m=1
+XM9 out outx32 vss vss sky130_fd_pr__nfet_01v8 W=1.2 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=2 m=2 
+XM10 out outx32 vdd vdd sky130_fd_pr__pfet_01v8 W=1.5 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=4 m=4 
+x26 10 net12 net1 en 9 vss nand
+V4 en vss PULSE(0 {Vdd} 100ns 1ps 1ps 0.25us 0.5us) 
+**** begin user architecture code
+
+
+
+
+* Circuit Parameters
+.param vdd  = 1.8
+.param vss  = 0.0
+.param vin  = 1
+.param iref = 200u
+.options TEMP = 65.0
+
+* Include Models
+.lib ~/skywater/skywater-pdk/libraries/sky130_fd_pr/latest/models/corners/sky130.lib TT
+
+* OP Parameters & Singals to save
+.save all  @M.X2.XM1.msky130_fd_pr__nfet_01v8[id] @M.X2.XM1.msky130_fd_pr__nfet_01v8[vth]
++ @M.X2.XM1.msky130_fd_pr__nfet_01v8[vgs] @M.X2.XM1.msky130_fd_pr__nfet_01v8[vds] @M.X2.XM1.msky130_fd_pr__nfet_01v8[vdsat]
++ @M.X2.XM1.msky130_fd_pr__nfet_01v8[gm] @M.X2.XM1.msky130_fd_pr__nfet_01v8[gds] @M.X2.XM1.msky130_fd_pr__nfet_01v8[cgs]
++ @M.X2.XM1.msky130_fd_pr__nfet_01v8[cgd]  @M.X2.XM2.msky130_fd_pr__pfet_01v8[id] @M.X2.XM2.msky130_fd_pr__pfet_01v8[vth]
++ @M.X2.XM2.msky130_fd_pr__pfet_01v8[vgs] @M.X2.XM2.msky130_fd_pr__pfet_01v8[vds] @M.X2.XM2.msky130_fd_pr__pfet_01v8[vdsat]
++ @M.X2.XM2.msky130_fd_pr__pfet_01v8[gm] @M.X2.XM2.msky130_fd_pr__pfet_01v8[gds] @M.X2.XM1.msky130_fd_pr__nfet_01v8[cgs]
++ @M.X2.XM1.msky130_fd_pr__nfet_01v8[cgd]  @M.XM6.msky130_fd_pr__nfet_01v8[id] @M.XM6.msky130_fd_pr__nfet_01v8[vth]
++ @M.XM6.msky130_fd_pr__nfet_01v8[vgs] @M.XM6.msky130_fd_pr__nfet_01v8[vds] @M.XM6.msky130_fd_pr__nfet_01v8[vdsat]
++ @M.XM6.msky130_fd_pr__nfet_01v8[gm] @M.XM6.msky130_fd_pr__nfet_01v8[gds] @M.XM6.msky130_fd_pr__nfet_01v8[cgs]
++ @M.XM6.msky130_fd_pr__nfet_01v8[cgd]  @M.XM5.msky130_fd_pr__pfet_01v8[id] @M.XM5.msky130_fd_pr__pfet_01v8[vth]
++ @M.XM5.msky130_fd_pr__pfet_01v8[vgs] @M.XM5.msky130_fd_pr__pfet_01v8[vds] @M.XM5.msky130_fd_pr__pfet_01v8[vdsat]
++ @M.XM5.msky130_fd_pr__pfet_01v8[gm] @M.XM5.msky130_fd_pr__pfet_01v8[gds] @M.XM5.msky130_fd_pr__nfet_01v8[cgs]
++ @M.XM5.msky130_fd_pr__nfet_01v8[cgd]
+
+
+
+*Simulations
+.control
+  tran 0.05n 1u
+  setplot tran1
+  plot v(out) v(outx32)+2 v(outx16)+4 v(outx8)+6 v(outx4)+8 v(outx2)+10 v(out_vco)+12 v(en)+14
+
+  linearize
+  set specwindow=blackman
+  fft v(out_vco)
+  spec 10 1000000 1000 v(out_vco)
+  plot mag(v(out_vco))
+
+  reset
+  tran 0.05n 1u
+  setplot tran2
+  linearize
+  fft v(out)
+  spec 10 1000000 1000 v(out)
+  plot mag(v(out))
+  write ~/caravel_fulgor_opamp/xschem/ring_vco/sim_results/ring_vco_tran1.raw
+
+
+.endc
+
+.end
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  not.sym # of pins=5
+
+.subckt not  vdd in out vss vbulk
+*.ipin vdd
+*.ipin in
+*.ipin vss
+*.opin out
+*.ipin vbulk
+XM1 out in vss vbulk sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+.ends
+
+
+* expanding   symbol:  FD_v2.sym # of pins=4
+
+.subckt FD_v2  clk vss out vdd
+*.opin out
+*.ipin vdd
+*.ipin clk
+*.ipin vss
+XM1 1 4 vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 1 4 vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM3 1 clk 2 vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM4 1 clk_b 2 vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM5 3 2 vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM6 3 2 vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM7 3 clk_b out vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM8 3 clk out vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM9 4 out vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM10 4 out vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM11 clk_b clk vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM12 clk_b clk vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+.ends
+
+
+* expanding   symbol:  nand.sym # of pins=6
+
+.subckt nand  vdd A OUT B vss vbulk
+*.opin OUT
+*.ipin vdd
+*.ipin A
+*.ipin B
+*.ipin vss
+*.ipin vbulk
+XM1 net1 B vss vbulk sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 OUT A net1 vbulk sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM5 OUT A vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM6 OUT B vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+.ends
+
+.GLOBAL GND
+.end

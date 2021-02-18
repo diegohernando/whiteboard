@@ -1,0 +1,31 @@
+**.subckt FD_v2 out vdd clk vss
+*.opin out
+*.ipin vdd
+*.ipin clk
+*.ipin vss
+XM1 1 4 vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 1 4 vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM3 1 clk 2 vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM4 1 clk_b 2 vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM5 3 2 vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM6 3 2 vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM7 3 clk_b out vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM8 3 clk out vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM9 4 out vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM10 4 out vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM11 clk_b clk vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM12 clk_b clk vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+**.ends
+.end

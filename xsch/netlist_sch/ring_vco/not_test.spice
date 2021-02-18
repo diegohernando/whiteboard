@@ -1,0 +1,67 @@
+**.subckt not_test
+x1 vdd in out vss not
+V1 vss GND DC{Vss} 
+V2 vdd vss DC{Vdd} 
+V3 in vss PULSE(0 {Vin} 1ps 1ps 1ps 50ns 100ns) DC{Vin} 
+C1 out vss 1f m=1
+**** begin user architecture code
+
+
+
+
+* Circuit Parameters
+.param vdd  = 1.8
+.param vss  = 0.0
+.param vin  = 1.8
+.param iref = 200u
+.options TEMP = 65.0
+
+* Include Models
+.lib ~/skywater_pdk/skywater-pdk/libraries/sky130_fd_pr/latest/models/corners/sky130.lib TT
+
+* OP Parameters & Singals to save
+.save all  @M.X1.XM1.msky130_fd_pr__nfet_01v8[id] @M.X1.XM1.msky130_fd_pr__nfet_01v8[vth]
++ @M.X1.XM1.msky130_fd_pr__nfet_01v8[vgs] @M.X1.XM1.msky130_fd_pr__nfet_01v8[vds] @M.X1.XM1.msky130_fd_pr__nfet_01v8[vdsat]
++ @M.X1.XM1.msky130_fd_pr__nfet_01v8[gm] @M.X1.XM1.msky130_fd_pr__nfet_01v8[gds]  @M.X1.XM2.msky130_fd_pr__pfet_01v8[id]
++ @M.X1.XM2.msky130_fd_pr__pfet_01v8[vth] @M.X1.XM2.msky130_fd_pr__pfet_01v8[vgs] @M.X1.XM2.msky130_fd_pr__pfet_01v8[vds]
++ @M.X1.XM2.msky130_fd_pr__pfet_01v8[vdsat] @M.X1.XM2.msky130_fd_pr__pfet_01v8[gm] @M.X1.XM2.msky130_fd_pr__pfet_01v8[gds]
+
+*Simulations
+.control
+  tran 0.1n 0.5u
+  setplot tran1
+  plot v(out) v(in)
+  *write ~/caravel_fulgor_opamp/xschem/sim_results/opamp_closeloop_tran1.raw
+
+  reset
+  dc V3 0 1.8 0.01
+  setplot dc1
+  plot v(out) v(in)
+
+  reset
+  op
+  print all
+
+.endc
+
+.end
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /home/dhernando/caravel_fulgor_opamp/xschem/ring_vco/not.sym # of pins=4
+
+.subckt not  vdd in out vss
+*.ipin vdd
+*.ipin in
+*.ipin vss
+*.opin out
+XM1 out in vss vss sky130_fd_pr__nfet_01v8 W=0.45 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+XM2 out in vdd vdd sky130_fd_pr__pfet_01v8 W=0.9 L=0.15 ad='W * 0.29' pd='2 * (W + 0.29)' as='W * 0.29'
++ ps='2 * (W + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 nf=1 mult=1 m=1 
+.ends
+
+.GLOBAL GND
+.end
